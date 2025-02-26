@@ -21,7 +21,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::all();
+        return view('roles.create', compact('roles'));
     }
 
     /**
@@ -29,8 +30,19 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:roles,name|max:255',
+        ]);
+
+        Role::create([
+            'name' => $request->name,
+        ]);
+        $roles = Role::all();
+
+
+        return redirect()->route('roles.create', compact('roles'))->with('success', 'Role created successfully.');
     }
+
 
     /**
      * Display the specified resource.

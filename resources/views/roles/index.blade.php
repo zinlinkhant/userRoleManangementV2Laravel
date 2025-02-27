@@ -19,8 +19,8 @@
                     <td class="border border-gray-300 px-4 py-2">{{ $role->id }}</td>
                     <td class="border border-gray-300 px-4 py-2">{{ $role->name }}</td>
                     <td class="border border-gray-300 px-4 py-2">
-                        <a href="#" class="text-blue-600 hover:underline">Edit</a> |
-                        <form action="#" method="POST" class="inline">
+                        <a href="{{ route('roles.edit', $role->id) }}" class="text-blue-600 hover:underline">Edit</a> |
+                        <form action="{{ route('roles.destroy', $role->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-600 hover:underline">Delete</button>

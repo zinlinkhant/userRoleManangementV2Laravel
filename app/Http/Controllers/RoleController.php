@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
+use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
@@ -28,7 +29,7 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRoleRequest $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|unique:roles,name|max:255',
@@ -37,10 +38,8 @@ class RoleController extends Controller
         Role::create([
             'name' => $request->name,
         ]);
-        $roles = Role::all();
 
-
-        return redirect()->route('roles.create', compact('roles'))->with('success', 'Role created successfully.');
+        return redirect()->route('roles.create')->with('success', 'Role created successfully.');
     }
 
 
@@ -57,22 +56,32 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return view('roles.edit', compact('role'));
     }
-
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRoleRequest $request, Role $role)
+    public function update(Request $request, Role $role)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:roles,name,' . $role->id . '|max:255',
+        ]);
+
+        $role->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('roles.create')->with('success', 'Role updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Role $role)
     {
-        //
+        $role->delete();
+
+        return redirect()->route('roles.create')->with('success', 'Role deleted successfully.');
     }
 }

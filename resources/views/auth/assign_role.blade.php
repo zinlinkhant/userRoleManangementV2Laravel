@@ -52,8 +52,11 @@
             @foreach ($users as $user)
                 <tr class="hover:bg-gray-50">
                     <td class="px-4 py-2 border border-gray-300">{{ $user->name }}</td>
-                    <td class="px-4 py-2 border border-gray-300">{{ $adminUser->role->name ?? 'No Role' }}</td>
-
+                    @if ($user->role)
+                        <td>{{ $user->role->name }}</td>
+                    @else
+                        <td>no role</td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>

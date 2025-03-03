@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('assign-role', [AdminUserController::class, 'showAssignRolePage'])->name('assignRolePage');
     Route::put('assign-role', [AdminUserController::class, 'assignRole'])->name('assignRole');
+    Route::post('/logout', [AdminUserController::class, 'logout'])->name('logout');
 });
 
 Route::get('/login', [AdminUserController::class, 'showLoginForm'])->name('login');

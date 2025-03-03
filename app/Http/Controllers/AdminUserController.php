@@ -59,11 +59,15 @@ class AdminUserController extends Controller
     }
 
     // Handle logout
-    public function logout()
+    public function logout(Request $request)
     {
+
         Auth::logout();
-        return redirect()->route('login');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
     }
+
     /**
      * Display a listing of the resource.
      */

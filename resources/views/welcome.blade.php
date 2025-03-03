@@ -14,6 +14,16 @@
     <h1 class="text-3xl font-bold ">
         Hello world!
     </h1>
+    @if (auth()->check())
+        <div>
+            {{ auth()->user()->name }}
+            {{ auth()->user()->email }}
+        </div>
+    @else
+        <div>
+            you must login
+        </div>
+    @endif
 
 </body>
 

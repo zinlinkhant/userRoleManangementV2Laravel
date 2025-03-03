@@ -10,5 +10,9 @@ class Permission extends Model
     /** @use HasFactory<\Database\Factories\PermissionFactory> */
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'feature_id'];
+    public function feature()
+    {
+        return $this->belongsTo(Feature::class);
+    }
 }

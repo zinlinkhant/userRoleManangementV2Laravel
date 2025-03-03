@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Feature;
 use App\Http\Requests\StoreFeatureRequest;
 use App\Http\Requests\UpdateFeatureRequest;
+use Illuminate\Http\Request;
 
 class FeatureController extends Controller
 {
@@ -21,15 +22,24 @@ class FeatureController extends Controller
      */
     public function create()
     {
-        //
+        $features = Feature::all();
+        return view('features.create', compact('features'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFeatureRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:features,name|max:255',
+        ]);
+
+        Feature::create([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('features.create')->with('success', 'Feature created successfully.');
     }
 
     /**
@@ -45,15 +55,23 @@ class FeatureController extends Controller
      */
     public function edit(Feature $feature)
     {
-        //
+        return view('features.edit', compact('feature'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFeatureRequest $request, Feature $feature)
+    public function update(Request $request, Feature $feature)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:features,name,' . $feature->id . '|max:255',
+        ]);
+
+        $feature->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('features.create')->with('success', 'Feature updated successfully.');
     }
 
     /**
@@ -61,6 +79,8 @@ class FeatureController extends Controller
      */
     public function destroy(Feature $feature)
     {
-        //
+        $feature->delete();
+
+        return redirect()->route('features.create')->with('success', 'Feature deleted successfully.');
     }
 }

@@ -9,4 +9,5 @@ class Feature extends Model
 {
     /** @use HasFactory<\Database\Factories\FeatureFactory> */
     use HasFactory;
+    protected $fillable = ['name'];
 }

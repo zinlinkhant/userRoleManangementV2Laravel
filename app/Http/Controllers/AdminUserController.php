@@ -6,6 +6,7 @@ use App\Models\Admin_user;
 use App\Http\Requests\StoreAdmin_userRequest;
 use App\Http\Requests\UpdateAdmin_userRequest;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -70,7 +71,9 @@ class AdminUserController extends Controller
     {
         $adminUsers = Admin_user::all();
         $roles = Role::all();
-        return view('auth.assign_role', compact('adminUsers', 'roles'));
+
+        $users = Admin_user::with('role')->get();
+        return view('auth.assign_role', compact('adminUsers', 'roles', 'users'));
     }
 
     public function assignRole(Request $request)

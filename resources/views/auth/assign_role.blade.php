@@ -41,6 +41,26 @@
         </form>
     </div>
 
+    <table class="w-full border-collapse border border-gray-300 rounded-lg shadow-md">
+        <thead>
+            <tr class="bg-gray-100 text-left">
+                <th class="px-4 py-2 border border-gray-300">Name</th>
+                <th class="px-4 py-2 border border-gray-300">Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($users as $user)
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2 border border-gray-300">{{ $user->name }}</td>
+                    <td class="px-4 py-2 border border-gray-300">{{ $adminUser->role->name ?? 'No Role' }}</td>
+
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+
+
     <script>
         document.getElementById('assignRoleForm').addEventListener('submit', function(event) {
             const selectedUser = document.getElementById('adminUser').value;
